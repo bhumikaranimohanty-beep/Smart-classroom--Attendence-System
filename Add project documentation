@@ -60,9 +60,111 @@ Attendance Report
 
 - HTML
 - CSS
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#222}header{background:#1f4e79;color:white;text-align:center;padding:28px 15px}header h1{margin:0 0 8px}nav{background:#163a5c;padding:12px;text-align:center}nav a{color:white;text-decoration:none;margin:0 12px}.hero{text-align:center;padding:50px 20px;background:white}.hero h2{font-size:32px;margin-bottom:10px}.btn{display:inline-block;background:#1f4e79;color:white;border:0;padding:11px 18px;border-radius:6px;text-decoration:none;cursor:pointer;margin-top:10px}.cards{display:flex;gap:20px;max-width:1000px;margin:30px auto;padding:0 20px}.card{background:white;padding:22px;flex:1;border-radius:10px;box-shadow:0 2px 8px #0001}.panel{background:white;max-width:600px;margin:30px auto;padding:25px;border-radius:10px;box-shadow:0 2px 8px #0001}.panel label{display:block;margin-top:15px;font-weight:bold}.panel input,.panel select{width:100%;padding:10px;margin-top:6px;border:1px solid #bbb;border-radius:5px}.panel .btn{width:100%}footer{text-align:center;padding:20px;background:#163a5c;color:white;margin-top:40px}@media(max-width:700px){.cards{flex-direction:column}.hero h2{font-size:25px}}
 - JavaScript
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
+  if (form) {
+    form.addEventListener("submit", function () {
+      const status = document.getElementById("status").value;
+      alert("Attendance marked as " + status + ".");
+    });
+  }
+});
 - PHP
+<?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "smart_classroom";
+
+$conn = new mysqli($host, $user, $password, $database);
+
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+}
+?>
+<?php
+require "db.php";
+
+$student_id = intval($_POST["student_id"] ?? 0);
+$student_name = trim($_POST["student_name"] ?? "");
+$class_name = trim($_POST["class_name"] ?? "");
+$status = $_POST["status"] ?? "";
+
+if ($student_id <= 0 || $student_name === "" || $class_name === "" ||
+    !in_array($status, ["Present", "Absent"], true)) {
+    die("Invalid attendance data.");
+}
+
+$stmt = $conn->prepare(
+    "INSERT INTO attendance (student_id, student_name, class_name, status, attendance_date)
+     VALUES (?, ?, ?, ?, CURDATE())"
+);
+$stmt->bind_param("isss", $student_id, $student_name, $class_name, $status);
+
+if ($stmt->execute()) {
+    echo "<h2>Attendance saved successfully.</h2>";
+    echo "<p><a href='../index.html'>Back to Home</a></p>";
+} else {
+    echo "Error: " . htmlspecialchars($conn->error);
+}
+
+$stmt->close();
+$conn->close();
+?>
+<?php
+require "db.php";
+$result = $conn->query("SELECT * FROM attendance ORDER BY attendance_date DESC, id DESC");
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Report</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+table{width:95%;margin:30px auto;border-collapse:collapse;background:white}
+th,td{padding:10px;border:1px solid #ccc;text-align:center}
+th{background:#1f4e79;color:white}
+</style>
+</head>
+<body>
+<header><h1>Attendance Report</h1></header>
+<table>
+<tr><th>ID</th><th>Student ID</th><th>Name</th><th>Class</th><th>Status</th><th>Date</th></tr>
+<?php while($row=$result->fetch_assoc()): ?>
+<tr>
+<td><?=htmlspecialchars($row["id"])?></td>
+<td><?=htmlspecialchars($row["student_id"])?></td>
+<td><?=htmlspecialchars($row["student_name"])?></td>
+<td><?=htmlspecialchars($row["class_name"])?></td>
+<td><?=htmlspecialchars($row["status"])?></td>
+<td><?=htmlspecialchars($row["attendance_date"])?></td>
+</tr>
+<?php endwhile; ?>
+</table>
+</body>
+</html>
+<?php $conn->close(); ?>
 - MySQL
+CREATE DATABASE IF NOT EXISTS smart_classroom;
+USE smart_classroom;
+
+CREATE TABLE IF NOT EXISTS attendance (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    student_name VARCHAR(100) NOT NULL,
+    class_name VARCHAR(100) NOT NULL,
+    status ENUM('Present','Absent') NOT NULL,
+    attendance_date DATE NOT NULL
+);
+
+INSERT INTO attendance (student_id, student_name, class_name, status, attendance_date)
+VALUES
+(101, 'krishna', 'B.Sc CS', 'Present', CURDATE()),
+(102, 'Radha', 'B.Sc CS', 'Absent', CURDATE());
 - XAMPP
 
 ## 8. Main Modules
