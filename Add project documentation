@@ -1,0 +1,144 @@
+Smart Classroom Attendance and Management System
+
+## 1. Introduction
+
+The Smart Classroom Attendance and Management System is a web-based
+application designed to manage classroom attendance digitally.
+It helps teachers record, store and view student attendance easily.
+
+## 2. Problem Statement
+
+Traditional attendance systems use paper registers and require
+manual record keeping. This process is time-consuming and may
+lead to errors. Finding old records and calculating attendance
+can also be difficult.
+
+## 3. Objectives
+
+- To digitize the attendance process.
+- To reduce manual paperwork.
+- To store attendance records digitally.
+- To make attendance management easier.
+- To reduce errors.
+- To generate attendance reports.
+
+## 4. Existing System
+
+In the existing system, teachers generally use a register to
+record student attendance manually.
+
+### Disadvantages
+
+- Time-consuming
+- Paper-based records
+- Difficult to search old records
+- Manual calculation
+- Possibility of human errors
+
+## 5. Proposed System
+
+The proposed system is a web-based attendance management system.
+Teachers can enter student details and mark students as Present
+or Absent. The attendance information is processed using PHP
+and stored in a MySQL database.
+
+## 6. How the System Works
+
+Teacher
+   ↓
+Attendance Form
+   ↓
+HTML/CSS/JavaScript
+   ↓
+PHP
+   ↓
+MySQL Database
+   ↓
+Attendance Report
+
+## 7. Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- PHP
+- MySQL
+- XAMPP
+
+## 8. Main Modules
+
+### Student Management
+Manages student information such as student ID, name and class.
+
+### Attendance Management
+Allows the teacher to mark Present or Absent.
+
+### Database Management
+Stores attendance records in MySQL.
+
+### Attendance Report
+Displays previously stored attendance records.
+
+## 9. Database
+
+The attendance table contains:
+
+- ID
+- Student ID
+- Student Name
+- Class
+- Status
+- Attendance Date
+
+## 10. Hardware Requirements
+
+- Computer/Laptop
+- Minimum 4 GB RAM
+- Keyboard
+- Mouse
+
+## 11. Software Requirements
+
+- Windows/Linux
+- XAMPP
+- PHP
+- MySQL
+- VS Code
+- Web Browser
+
+## 12. Advantages
+
+- Saves time
+- Reduces paperwork
+- Easy to maintain
+- Easy to access records
+- Reduces manual errors
+
+## 13. Limitations
+
+- Requires a computer/server environment.
+- Attendance is currently entered manually.
+- Advanced authentication is not included in the beginner version.
+
+## 14. Future Scope
+
+- Admin and teacher login
+- Student login
+- QR-code attendance
+- Face-recognition attendance
+- Attendance percentage
+- Timetable management
+- PDF/Excel reports
+- Mobile application
+
+## 15. Conclusion
+
+The Smart Classroom Attendance and Management System provides
+a simple and efficient way to manage classroom attendance
+digitally. It reduces manual work and makes attendance records
+easier to store and access.
+
+## 16. Author
+
+Bhumika Rani Mohanty
+B.Sc. Computer Science
